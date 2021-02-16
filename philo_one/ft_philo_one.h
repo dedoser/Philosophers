@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/16 09:51:28 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/16 19:07:22 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	int				die;
 	int				count;
 	struct timeval	beg;
+	size_t			last_m;
 }	t_philo;
 
 typedef struct s_t
@@ -54,5 +55,6 @@ int		ft_atoi(char *str);
 size_t	get_time(t_philo * st);
 int		init_time(t_philo *st);
 int		start_philo(t_s *st);
+int		ft_usleep(size_t time);
 
 #endif
