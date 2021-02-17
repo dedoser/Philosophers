@@ -9,7 +9,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "/home/fignigno/Desktop/school21/Philosophers/philo_one/a.out",
-			"args": ["5","800","200","200"],
+			"args": ["5","800","200","200","7"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],

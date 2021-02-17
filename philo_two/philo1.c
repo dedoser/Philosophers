@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:24:07 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/17 22:10:39 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/17 22:07:52 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	test(t_philo *st)
 {
-	if (st->state == HUNGRY && st->left->state != EAT
-		&& st->right->state != EAT)
-	{
+		sem_wait(*st->sem);
+		sem_wait(*st->sem);
 		st->state = EAT;
-	}
 }
 
 void	put_forks(t_philo *st)
@@ -36,6 +34,8 @@ int		eat(t_philo *st)
 	st->last_m = get_time(st);
 	printf("%ld, philo %d start eating\n", st->last_m, st->num);
 	ft_usleep(st->eat * 1000);
+	sem_post(*st->sem);
+	sem_post(*st->sem);
 	st->count -= st->count != -1;
 	if (st->count == 0)
 	{
@@ -51,11 +51,7 @@ void	take_forks(t_philo *st)
 {
 	st->state = HUNGRY;
 	while (st->state == HUNGRY)
-	{
-		pthread_mutex_lock(st->mutex);
 		test(st);
-		pthread_mutex_unlock(st->mutex);
-	}
 }
 
 void	*thread_start(void *arg)
@@ -88,7 +84,8 @@ int		start_philo(t_s *st)
 	int		i;
 
 	i = -1;
-	pthread_mutex_init(&st->mutex, NULL);
+	st->sem = sem_open("sem", O_CREAT, O_RDWR, st->num);
+	sem_unlink("sem");
 	while (++i < st->num)
 	{
 		init_time(&st->mass[i]);
@@ -102,7 +99,7 @@ int		start_philo(t_s *st)
 			if (st->mass[i].count != 0 && get_time(&st->mass[i]) - st->mass[i].last_m > st->die)
 			{
 				printf("%ld, philo %d died(\n", get_time(&st->mass[i]), i + 1);
-				pthread_mutex_destroy(&st->mutex);
+				sem_close(st->sem);
 				return (0);
 			}
 		}

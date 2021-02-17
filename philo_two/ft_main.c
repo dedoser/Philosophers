@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/17 21:49:14 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/17 22:04:48 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_philo(t_s *st)
 		r = i % st->num + 1;
 		st->mass[i].left = l < 0 ? &st->mass[st->num - 1] : &st->mass[l];
 		st->mass[i].right = r == st->num ? &st->mass[0] : &st->mass[r];
-		st->mass[i].mutex = &st->mutex;
+		st->mass[i].sem = &st->sem;
 		st->mass[i].sleep = st->sleep;
 		st->mass[i].die = st->die;
 		st->mass[i].eat = st->eat;
@@ -43,6 +43,7 @@ void	finish_work(t_s *st)
 	i = -1;
 	while (++i < st->num)
 		pthread_detach(st->mass[i].th);
+	free(st->mass);
 }
 
 int		philo(char **argv)
