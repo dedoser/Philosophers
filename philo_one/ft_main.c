@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/17 21:49:14 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/18 23:54:20 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	init_philo(t_s *st)
 		st->mass[i].count = st->count;
 		st->mass[i].num = i + 1;
 		st->mass[i].state = HUNGRY;
+		st->mass[i].philos_num = st->num;
 	}
 }
 
@@ -60,7 +61,8 @@ int		philo(char **argv)
 		printf("Not valid arguments\n");
 		return (-1);
 	}
-	if (!(st.mass = (t_philo *)malloc(sizeof(t_philo) * st.num)))
+	if (!(st.mass = (t_philo *)malloc(sizeof(t_philo) * st.num)) ||
+		!(st.mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * st.num)))
 	{
 		printf("Malloc error\n");
 		return (-1);

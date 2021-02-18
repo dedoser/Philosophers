@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:24:07 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/17 22:10:39 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/18 23:59:38 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	test(t_philo *st)
 {
-	if (st->state == HUNGRY && st->left->state != EAT
-		&& st->right->state != EAT)
-	{
-		st->state = EAT;
-	}
+	pthread_mutex_lock(&(*st->mutex)[st->num - 1]);
+	pthread_mutex_lock(&(*st->mutex)[st->num % st->philos_num]);
+	st->state = EAT;
 }
 
 void	put_forks(t_philo *st)
@@ -36,6 +34,8 @@ int		eat(t_philo *st)
 	st->last_m = get_time(st);
 	printf("%ld, philo %d start eating\n", st->last_m, st->num);
 	ft_usleep(st->eat * 1000);
+	pthread_mutex_unlock(&(*st->mutex)[st->num - 1]);
+	pthread_mutex_unlock(&(*st->mutex)[st->num % st->philos_num]);
 	st->count -= st->count != -1;
 	if (st->count == 0)
 	{
@@ -50,12 +50,13 @@ int		eat(t_philo *st)
 void	take_forks(t_philo *st)
 {
 	st->state = HUNGRY;
-	while (st->state == HUNGRY)
-	{
-		pthread_mutex_lock(st->mutex);
-		test(st);
-		pthread_mutex_unlock(st->mutex);
-	}
+	test(st);
+	// while (st->state == HUNGRY)
+	// {
+	// 	pthread_mutex_lock(st->mutex);
+	// 	test(st);
+	// 	pthread_mutex_unlock(st->mutex);
+	// }
 }
 
 void	*thread_start(void *arg)
@@ -88,7 +89,9 @@ int		start_philo(t_s *st)
 	int		i;
 
 	i = -1;
-	pthread_mutex_init(&st->mutex, NULL);
+	while (++i < st->num)
+		pthread_mutex_init(&(st->mutex[i]), NULL);
+	i = -1;
 	while (++i < st->num)
 	{
 		init_time(&st->mass[i]);
@@ -99,10 +102,10 @@ int		start_philo(t_s *st)
 	{
 		while (++i < st->num)
 		{
-			if (st->mass[i].count != 0 && get_time(&st->mass[i]) - st->mass[i].last_m > st->die)
+			if (st->mass[i].count != 0 && get_time(&st->mass[i]) - st->mass[i].last_m >= st->die)
 			{
 				printf("%ld, philo %d died(\n", get_time(&st->mass[i]), i + 1);
-				pthread_mutex_destroy(&st->mutex);
+				// pthread_mutex_destroy(&st->mutex);
 				return (0);
 			}
 		}

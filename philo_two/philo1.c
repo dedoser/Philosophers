@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:24:07 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/17 22:07:52 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/19 00:01:22 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		start_philo(t_s *st)
 	{
 		while (++i < st->num)
 		{
-			if (st->mass[i].count != 0 && get_time(&st->mass[i]) - st->mass[i].last_m > st->die)
+			if (st->mass[i].count != 0 && get_time(&st->mass[i]) - st->mass[i].last_m >= st->die)
 			{
 				printf("%ld, philo %d died(\n", get_time(&st->mass[i]), i + 1);
 				sem_close(st->sem);

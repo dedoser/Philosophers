@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/16 19:07:22 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/18 23:54:04 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 typedef struct s_philo
 {
 	int				num;
+	int				philos_num;
 	int				state;
 	pthread_t		th;
 	struct s_philo	*left;
 	struct s_philo	*right;
-	pthread_mutex_t	*mutex;
+	pthread_mutex_t	**mutex;
 	int				sleep;
 	int				eat;
 	int				die;
@@ -48,7 +49,7 @@ typedef struct s_t
 	int				count;
 	int				num;
 	t_philo			*mass;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	*mutex;
 }	t_s;
 
 int		ft_atoi(char *str);
