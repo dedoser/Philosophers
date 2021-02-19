@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/19 20:51:33 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/19 22:13:52 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		add_malloc(t_s *st)
 {
 	if (!(st->mass = (t_philo *)malloc(sizeof(t_philo) * st->num)) ||
-		!(st->count =
+		!(st->mutex =
 		(pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * st->num)))
 	{
 		printf("Malloc error\n");
