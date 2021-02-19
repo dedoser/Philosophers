@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/18 23:54:04 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/19 18:55:56 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,13 @@ typedef struct s_t
 	int				num;
 	t_philo			*mass;
 	pthread_mutex_t	*mutex;
+	int				death_num;
 }	t_s;
 
 int		ft_atoi(char *str);
 size_t	get_time(t_philo * st);
 int		init_time(t_philo *st);
 int		start_philo(t_s *st);
-int		ft_usleep(size_t time);
+int		ft_usleep(unsigned long long time);
 
 #endif
