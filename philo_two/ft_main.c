@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/17 22:04:48 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:33:37 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_philo(t_s *st)
 	int	r;
 
 	i = -1;
+	st->death_num = -1;
 	while (++i < st->num)
 	{
 		memset(&st->mass[i], 0, sizeof(t_philo));
@@ -68,6 +69,9 @@ int		philo(char **argv)
 	}
 	init_philo(&st);
 	start_philo(&st);
+	if (st.death_num > 0)
+		printf("%ldms %d died\n", get_time(&st.mass[st.death_num - 1]),
+		st.death_num);
 	finish_work(&st);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/17 22:04:39 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:35:37 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ typedef struct s_philo
 
 typedef struct s_t
 {
-	int				sleep;
-	int				eat;
-	int				die;
-	int				count;
-	int				num;
-	t_philo			*mass;
-	sem_t			*sem;
+	int					death_num;
+	int					sleep;
+	int					eat;
+	unsigned long long	die;
+	int					count;
+	int					num;
+	t_philo				*mass;
+	sem_t				*sem;
 }	t_s;
 
 int		ft_atoi(char *str);
 size_t	get_time(t_philo * st);
 int		init_time(t_philo *st);
 int		start_philo(t_s *st);
-int		ft_usleep(size_t time);
+int		ft_usleep(unsigned long long time);
 
 #endif

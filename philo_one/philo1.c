@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 19:24:07 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/19 20:52:58 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:28:33 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 void	test(t_philo *st)
 {
+	if (st->start)
+	{
+		st->start--;
+		ft_usleep(2);
+	}
 	pthread_mutex_lock(&(*st->mutex)[st->num - 1]);
-	// usleep(2);
 	pthread_mutex_lock(&(*st->mutex)[st->num % st->philos_num]);
-	printf("%ldms, philo %d has taken fork\n", get_time(st), st->num);
-	printf("%ldms, philo %d has taken fork\n", get_time(st), st->num);
+	printf("%ldms %d has taken fork\n", get_time(st), st->num);
+	printf("%ldms %d has taken fork\n", get_time(st), st->num);
 	st->state = EAT;
 }
 
@@ -27,15 +31,15 @@ void	put_forks(t_philo *st)
 	// pthread_mutex_lock(st->mutex);
 	st->state = SLEEP;
 	// pthread_mutex_unlock(st->mutex);
-	printf("%ldms, philo %d is sleeping\n", get_time(st), st->num);
+	printf("%ldms %d is sleeping\n", get_time(st), st->num);
 	ft_usleep(st->sleep * 1000);
-	printf("%ldms, philo %d is thinking\n", get_time(st), st->num);
+	printf("%ldms %d is thinking\n", get_time(st), st->num);
 }
 
 int		eat(t_philo *st)
 {
 	st->last_m = get_time(st);
-	printf("%ldms, philo %d is eating\n", st->last_m, st->num);
+	printf("%ldms %d is eating\n", st->last_m, st->num);
 	ft_usleep(st->eat * 1000);
 	pthread_mutex_unlock(&(*st->mutex)[st->num - 1]);
 	pthread_mutex_unlock(&(*st->mutex)[st->num % st->philos_num]);

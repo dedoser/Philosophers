@@ -6,26 +6,26 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 02:25:47 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/16 19:01:11 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:35:26 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philo_one.h"
 
-int		ft_usleep(size_t time)
+int		ft_usleep(unsigned long long time)
 {
 	struct timeval	start;
 	struct timeval	new;
 
 	if (gettimeofday(&start, NULL) == -1)
 		return (1);
-	while (42)
+	while (21)
 	{
-		usleep(42);
+		usleep(21);
 		if (gettimeofday(&new, NULL))
 			return (1);
-		if (((new.tv_sec - start.tv_sec) * 1000000 +
-		new.tv_usec - start.tv_usec) > (long)time)
+		if ((unsigned long long)((new.tv_sec - start.tv_sec) * 1000000 +
+		new.tv_usec - start.tv_usec) > (unsigned long long)time)
 			break ;
 	}
 	return (0);

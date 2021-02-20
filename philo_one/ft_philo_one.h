@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/19 18:55:56 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:20:53 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ typedef struct s_philo
 	int				philos_num;
 	int				state;
 	pthread_t		th;
-	struct s_philo	*left;
-	struct s_philo	*right;
 	pthread_mutex_t	**mutex;
 	int				sleep;
 	int				eat;
@@ -39,18 +37,19 @@ typedef struct s_philo
 	int				count;
 	struct timeval	beg;
 	size_t			last_m;
+	int				start;
 }	t_philo;
 
 typedef struct s_t
 {
-	int				sleep;
-	int				eat;
-	int				die;
-	int				count;
-	int				num;
-	t_philo			*mass;
-	pthread_mutex_t	*mutex;
-	int				death_num;
+	int					sleep;
+	int					eat;
+	unsigned long long	die;
+	int					count;
+	int					num;
+	t_philo				*mass;
+	pthread_mutex_t		*mutex;
+	int					death_num;
 }	t_s;
 
 int		ft_atoi(char *str);

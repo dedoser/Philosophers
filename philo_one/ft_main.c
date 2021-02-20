@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/19 22:13:52 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/02/20 19:28:44 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,12 @@ int		add_malloc(t_s *st)
 void	init_philo(t_s *st)
 {
 	int	i;
-	int	l;
-	int	r;
 
 	i = -1;
 	st->death_num = -1;
 	while (++i < st->num)
 	{
 		memset(&st->mass[i], 0, sizeof(t_philo));
-		l = i % st->num - 1;
-		r = i % st->num + 1;
-		st->mass[i].left = l < 0 ? &st->mass[st->num - 1] : &st->mass[l];
-		st->mass[i].right = r == st->num ? &st->mass[0] : &st->mass[r];
 		st->mass[i].mutex = &st->mutex;
 		st->mass[i].sleep = st->sleep;
 		st->mass[i].die = st->die;
@@ -47,6 +41,7 @@ void	init_philo(t_s *st)
 		st->mass[i].num = i + 1;
 		st->mass[i].state = HUNGRY;
 		st->mass[i].philos_num = st->num;
+		st->mass[i].start = st->mass[i].num % 2;
 	}
 	i = -1;
 	while (++i < st->num)
@@ -86,7 +81,7 @@ int		philo(char **argv)
 		return (0);
 	init_philo(&st);
 	start_philo(&st);
-	printf("%ldms, philo %d died\n", get_time(&st.mass[st.death_num - 1]),
+	printf("%ldms %d died\n", get_time(&st.mass[st.death_num - 1]),
 		st.death_num);
 	finish_work(&st);
 	return (0);
