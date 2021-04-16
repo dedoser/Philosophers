@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/04/16 21:00:41 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/16 18:27:31 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	finish_work(t_s *st)
 
 	i = -1;
 	while (++i < st->num)
-		pthread_detach(st->mass[i].th);
+		kill(st->pid_mass[i], SIGKILL);
 	free(st->mass);
+	free(st->pid_mass);
 }
 
 int		philo(char **argv)
@@ -69,11 +70,9 @@ int		philo(char **argv)
 		printf("Malloc error\n");
 		return (-1);
 	}
+	st.pid_mass = (pid_t *)malloc(sizeof(pid_t) * st.num);
 	init_philo(&st);
 	start_philo(&st);
-	if (st.death_num > 0)
-		printf("%ldms %d died\n", get_time(&st.mass[st.death_num - 1]),
-		st.death_num);
 	finish_work(&st);
 	return (0);
 }

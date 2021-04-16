@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/20 19:28:44 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/16 21:59:54 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ int		philo(char **argv)
 		return (0);
 	init_philo(&st);
 	start_philo(&st);
-	printf("%ldms %d died\n", get_time(&st.mass[st.death_num - 1]),
-		st.death_num);
+	if (st.death_num > 0)
+		printf("%ldms %d died\n", get_time(&st.mass[st.death_num - 1]),
+			st.death_num);
 	finish_work(&st);
 	return (0);
 }

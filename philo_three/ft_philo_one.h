@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/04/15 21:27:53 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/16 16:12:22 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <signal.h>
 
 # define HUNGRY 0
 # define EAT 1
@@ -30,7 +32,6 @@ typedef struct s_philo
 {
 	int				num;
 	int				state;
-	pthread_t		th;
 	struct s_philo	*left;
 	struct s_philo	*right;
 	sem_t			*sem;
@@ -38,6 +39,7 @@ typedef struct s_philo
 	int				eat;
 	int				die;
 	int				count;
+	pthread_t		th;
 	struct timeval	beg;
 	size_t			last_m;
 }	t_philo;
@@ -52,6 +54,7 @@ typedef struct s_t
 	int					num;
 	t_philo				*mass;
 	sem_t				*sem;
+	pid_t				*pid_mass;
 }	t_s;
 
 int		ft_atoi(char *str);

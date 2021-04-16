@@ -6,7 +6,7 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 02:25:47 by fignigno          #+#    #+#             */
-/*   Updated: 2021/04/16 20:47:02 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/15 21:36:20 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int		ft_usleep(unsigned long long time)
 		usleep(21);
 		if (gettimeofday(&new, NULL))
 			return (1);
-		if ((unsigned long long)((new.tv_sec - start.tv_sec) * 1000000 +
-		new.tv_usec - start.tv_usec) > (unsigned long long)time)
+		if (((new.tv_sec - start.tv_sec) * 1000000 +
+		new.tv_usec - start.tv_usec) > (long)time)
 			break ;
 	}
 	return (0);
