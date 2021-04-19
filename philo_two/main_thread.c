@@ -1,49 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   main_thread.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/15 17:51:17 by fignigno          #+#    #+#             */
-/*   Updated: 2021/04/19 23:08:13 by fignigno         ###   ########.fr       */
+/*   Created: 2021/04/19 23:09:51 by fignigno          #+#    #+#             */
+/*   Updated: 2021/04/19 23:14:18 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philo_two.h"
 
-int	ft_atoi(char *str)
+int	check_philos(t_s *st)
 {
-	int	res;
 	int	i;
 
-	if (!str)
-		return (-1);
 	i = -1;
-	res = 0;
-	while (str[++i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (-2);
-		res = res * 10 + str[i] - '0';
-	}
-	return (res);
+	while (++i < st->num)
+		if (st->mass[i].state != -1)
+			return (0);
+	return (1);
 }
 
-void	check_params(t_s *st)
+int	main_thread(t_s *st)
 {
-	if (st->die < 0 || st->eat < 0 || st->num < 0 || st->sleep < 0
-		|| st->count == -2)
-	{
-		printf("Not valid arguments\n");
-		exit (0);
-	}
-}
+	int	i;
 
-void	alloc_check(void *ptr)
-{
-	if (ptr)
-		return ;
-	printf("Malloc error\n");
-	exit(0);
+	while (1)
+	{
+		i = -1;
+		while (++i < st->num)
+		{
+			if (st->mass[i].count != 0
+				&& get_time(&st->mass[i]) - st->mass[i].last_m >= (size_t)st->die)
+			{
+				st->death_num = i + 1;
+				return (0);
+			}
+		}
+		if (check_philos(st))
+			return (0);
+	}
+	return (0);
 }

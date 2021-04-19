@@ -6,25 +6,22 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:21:56 by fignigno          #+#    #+#             */
-/*   Updated: 2021/04/16 21:59:54 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/19 22:04:55 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philo_one.h"
 
-int		add_malloc(t_s *st)
+static int	add_malloc(t_s *st)
 {
-	if (!(st->mass = (t_philo *)malloc(sizeof(t_philo) * st->num)) ||
-		!(st->mutex =
-		(pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * st->num)))
-	{
-		printf("Malloc error\n");
-		return (-1);
-	}
+	st->mass = (t_philo *)malloc(sizeof(t_philo) * st->num);
+	st->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * st->num);
+	alloc_check(st->mutex);
+	alloc_check(st->mass);
 	return (0);
 }
 
-void	init_philo(t_s *st)
+static void	init_philo(t_s *st)
 {
 	int	i;
 
@@ -39,7 +36,6 @@ void	init_philo(t_s *st)
 		st->mass[i].eat = st->eat;
 		st->mass[i].count = st->count;
 		st->mass[i].num = i + 1;
-		st->mass[i].state = HUNGRY;
 		st->mass[i].philos_num = st->num;
 		st->mass[i].start = st->mass[i].num % 2;
 	}
@@ -48,7 +44,7 @@ void	init_philo(t_s *st)
 		pthread_mutex_init(&(st->mutex[i]), NULL);
 }
 
-void	finish_work(t_s *st)
+static void	finish_work(t_s *st)
 {
 	int	i;
 
@@ -60,23 +56,16 @@ void	finish_work(t_s *st)
 		pthread_mutex_destroy(&st->mutex[i]);
 }
 
-int		philo(char **argv)
+static int	philo(char **argv)
 {
-	t_s st;
+	t_s	st;
 
-	if ((st.num = ft_atoi(argv[1])) < 0 ||
-		(st.die = ft_atoi(argv[2])) < 0 ||
-		(st.eat = ft_atoi(argv[3])) < 0 ||
-		(st.sleep = ft_atoi(argv[4])) < 0)
-	{
-		printf("Not valid arguments\n");
-		return (-1);
-	}
-	if ((st.count = ft_atoi(argv[5])) == -2)
-	{
-		printf("Not valid arguments\n");
-		return (-1);
-	}
+	st.num = ft_atoi(argv[1]);
+	st.die = ft_atoi(argv[2]);
+	st.eat = ft_atoi(argv[3]);
+	st.sleep = ft_atoi(argv[4]);
+	st.count = ft_atoi(argv[5]);
+	check_params(&st);
 	if (add_malloc(&st))
 		return (0);
 	init_philo(&st);
@@ -88,7 +77,7 @@ int		philo(char **argv)
 	return (0);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	if (argc == 5 || argc == 6)
 		return (philo(argv));

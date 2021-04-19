@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_philo_one.h                                     :+:      :+:    :+:   */
+/*   ft_philo_two.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/04/16 16:12:22 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/19 23:14:06 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE
-# define PHILO_ONE
+#ifndef FT_PHILO_TWO_H
+# define FT_PHILO_TWO_H
 
 # include <pthread.h>
 # include <semaphore.h>
@@ -21,17 +21,12 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-# include <sys/types.h>
-# include <signal.h>
-
-# define HUNGRY 0
-# define EAT 1
-# define SLEEP 2
 
 typedef struct s_philo
 {
 	int				num;
 	int				state;
+	pthread_t		th;
 	struct s_philo	*left;
 	struct s_philo	*right;
 	sem_t			*sem;
@@ -39,7 +34,6 @@ typedef struct s_philo
 	int				eat;
 	int				die;
 	int				count;
-	pthread_t		th;
 	struct timeval	beg;
 	size_t			last_m;
 }	t_philo;
@@ -49,18 +43,19 @@ typedef struct s_t
 	int					death_num;
 	int					sleep;
 	int					eat;
-	unsigned long long	die;
+	int					die;
 	int					count;
 	int					num;
 	t_philo				*mass;
 	sem_t				*sem;
-	pid_t				*pid_mass;
 }	t_s;
 
 int		ft_atoi(char *str);
-size_t	get_time(t_philo * st);
+size_t	get_time(t_philo *st);
 int		init_time(t_philo *st);
 int		start_philo(t_s *st);
 int		ft_usleep(unsigned long long time);
-
+void	check_params(t_s *st);
+void	alloc_check(void *ptr);
+int		main_thread(t_s *st);
 #endif

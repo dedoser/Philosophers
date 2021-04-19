@@ -6,13 +6,13 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:51:17 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/16 09:57:49 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/19 22:21:09 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_philo_one.h"
+#include "ft_philo_three.h"
 
-int		ft_atoi(char *str)
+int	ft_atoi(char *str)
 {
 	int	res;
 	int	i;
@@ -28,4 +28,22 @@ int		ft_atoi(char *str)
 		res = res * 10 + str[i] - '0';
 	}
 	return (res);
+}
+
+void	alloc_check(void *ptr)
+{
+	if (ptr)
+		return ;
+	printf("Malloc error\n");
+	exit(0);
+}
+
+void	check_params(t_s *st)
+{
+	if (st->die < 0 || st->eat < 0 || st->num < 0 || st->sleep < 0
+		|| st->count == -2)
+	{
+		printf("Not valid arguments\n");
+		exit (0);
+	}
 }

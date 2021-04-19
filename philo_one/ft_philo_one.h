@@ -6,12 +6,12 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 17:25:15 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/20 19:20:53 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/19 22:58:29 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ONE
-# define PHILO_ONE
+#ifndef FT_PHILO_ONE_H
+# define FT_PHILO_ONE_H
 
 # include <pthread.h>
 # include <stdio.h>
@@ -19,10 +19,6 @@
 # include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define HUNGRY 0
-# define EAT 1
-# define SLEEP 2
 
 typedef struct s_philo
 {
@@ -44,7 +40,7 @@ typedef struct s_t
 {
 	int					sleep;
 	int					eat;
-	unsigned long long	die;
+	int					die;
 	int					count;
 	int					num;
 	t_philo				*mass;
@@ -53,9 +49,11 @@ typedef struct s_t
 }	t_s;
 
 int		ft_atoi(char *str);
-size_t	get_time(t_philo * st);
+size_t	get_time(t_philo *st);
 int		init_time(t_philo *st);
 int		start_philo(t_s *st);
 int		ft_usleep(unsigned long long time);
-
+void	alloc_check(void *ptr);
+void	check_params(t_s *st);
+void	*thread_start(void *arg);
 #endif

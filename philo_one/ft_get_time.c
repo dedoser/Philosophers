@@ -6,13 +6,13 @@
 /*   By: fignigno <fignigno@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/16 02:25:47 by fignigno          #+#    #+#             */
-/*   Updated: 2021/02/20 19:19:15 by fignigno         ###   ########.fr       */
+/*   Updated: 2021/04/19 22:00:29 by fignigno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_philo_one.h"
 
-int		ft_usleep(unsigned long long time)
+int	ft_usleep(unsigned long long time)
 {
 	struct timeval	start;
 	struct timeval	new;
@@ -24,14 +24,14 @@ int		ft_usleep(unsigned long long time)
 		usleep(21);
 		if (gettimeofday(&new, NULL))
 			return (1);
-		if ((unsigned long long)((new.tv_sec - start.tv_sec) * 1000000 +
-		new.tv_usec - start.tv_usec) > (unsigned long long)time)
+		if ((unsigned long long)((new.tv_sec - start.tv_sec) * 1000000
+			+ new.tv_usec - start.tv_usec) > (unsigned long long)time)
 			break ;
 	}
 	return (0);
 }
 
-int		init_time(t_philo *st)
+int	init_time(t_philo *st)
 {
 	return (gettimeofday(&st->beg, NULL));
 }
